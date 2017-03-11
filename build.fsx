@@ -6,6 +6,7 @@ let buildDir = "./build/"
 let appReferences  =
     !! "src/app/**/*.csproj"
       ++ "src/app/**/*.fsproj"
+      ++ "src/**/*.fsproj"
 
 // Targets
 Target "Clean" (fun _ ->

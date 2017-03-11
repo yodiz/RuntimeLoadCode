@@ -54,6 +54,10 @@ let processFile fullPath =
     sw.Stop()
     printfn "Took %ims" sw.ElapsedMilliseconds
 
+    let a = Lib.DefaultHttp.app
+    let b = a.Routes () |> List.length
+    printfn "Routes length = %i" b
+
     ()
   )
 [<EntryPoint>]
@@ -73,5 +77,5 @@ let main args =
 
   Console.ReadKey() |> ignore
 
-  
+
   0

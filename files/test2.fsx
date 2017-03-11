@@ -1,9 +1,11 @@
+#r "../build/Lib.dll"
+
 let a = 5
 
 type MyViewModel = { A : string }
 
 let myView (a:string) =
-  "" //HttpREsponse
+  Lib.Response.text "Test"
 
 let controller =
   [
@@ -12,3 +14,9 @@ let controller =
 
 
 //SetRoute controller
+
+open Lib
+
+let route =  { Route.HttpMethod = "GET"; Route.Path = [] }
+
+DefaultHttp.extend (route, (fun _ -> Response.text "Hejsan"))
