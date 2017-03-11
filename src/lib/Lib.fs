@@ -7,10 +7,21 @@ type HttpRequest = {
 
 type HttpResponse = {
   HttpStatus : int
+  ContentType : string
+  Response : System.IO.Stream -> unit
 }
 
 module Response =
-  let text (str:string) = { HttpStatus = 200 }
+  let text (str:string) = {
+     HttpStatus = 200
+     ContentType = "text/plain; charset=utf-8"
+     Response =
+      (fun s ->
+        let sw = new System.IO.StreamWriter(s, System.Text.Encoding.UTF8)
+        sw.Write(str)
+      )
+   }
+
 
 type Test() =
   inherit System.Web.HttpApplication()
