@@ -55,8 +55,13 @@ let processFile fullPath =
     printfn "Took %ims" sw.ElapsedMilliseconds
 
     let a = Lib.DefaultHttp.app
-    let b = a.Routes () |> List.length
-    printfn "Routes length = %i" b
+    let b = (a.Routes ())
+    b |> Map.iter
+      (fun k v ->
+          printfn "%s" (k.ToString())
+      )
+
+
 
     ()
   )

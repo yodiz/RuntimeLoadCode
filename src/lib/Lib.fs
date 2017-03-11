@@ -31,29 +31,33 @@ type Test() =
 
 type PathPart =
   |Path of string
-  |Str of string
+  |Str
 
 type Route = {
   HttpMethod : string
   Path : PathPart list
 }
+  with
+    override x.ToString() =
+      let a = function |PathPart.Path p -> p |PathPart.Str -> sprintf "(string)"
+      let c = x.Path |> List.map a |> String.concat "/"
+      sprintf "%s - \"/%s\"" x.HttpMethod c
 
 type HttpApp = {
-  Routes : unit -> (Route*(HttpRequest -> HttpResponse)) list
+  Routes : unit -> Map<Route,(HttpRequest -> HttpResponse)>
 }
 
 
 let createHttpApp (newroutes) =
   let mutable routes = newroutes
-
   {
     Routes = (fun () -> routes)
   },
-  (fun x -> routes <- x :: routes)
+  (fun (k,v) -> routes <- Map.add k v routes  )
 
 
 module DefaultHttp =
-  let private defaultHttpApp = createHttpApp List.empty
+  let private defaultHttpApp = createHttpApp Map.empty
   let app = fst defaultHttpApp
   let extend = snd defaultHttpApp
 

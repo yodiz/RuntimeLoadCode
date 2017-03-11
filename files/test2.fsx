@@ -19,4 +19,4 @@ open Lib
 
 let route =  { Route.HttpMethod = "GET"; Route.Path = [] }
 
-DefaultHttp.extend (route, (fun _ -> Response.text "Hejsan"))
+DefaultHttp.extend (route, (fun _ -> Response.text "Micke är bäst "))
