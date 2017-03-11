@@ -1,2 +1,0 @@
-restore.cmd
-build.cmd
